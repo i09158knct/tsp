@@ -6,11 +6,11 @@
   w.drowLines = function(context, points){
     context.beginPath();
 
-    context.moveTo(points[0]);
+    context.moveTo.apply(context, points[0]);
     for(var i in points){
       context.lineTo.apply(context, points[i]);
     }
-    context.lineTo(points[0]);
+    context.lineTo.apply(context, points[0]);
 
     context.closePath();
     context.stroke();
