@@ -11,7 +11,7 @@ main = do
   arg_f:arg_i:arg_stdGen:_ <- fmap (++ cycle [""]) getArgs
   let iterations = getOne _DEFAULT_ITERATIONS arg_i
   text <- readFOrGetC' arg_f
-  gen <- setGetOrGetStdGen arg_stdGen
+  gen <- setGetOrGetStdGen' arg_stdGen
 
   let route = toNodes text
   let swapList = take iterations $ mkRndPairs gen $ length route

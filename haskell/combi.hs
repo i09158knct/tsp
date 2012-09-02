@@ -12,7 +12,7 @@ _DEFAULT_N = 1000
 _DEFAULT_C = 100
 _DEFAULT_INI_T = 100
 _DEFAULT_FIN_T = 0.8
-_DEFAULT_FORMAT = "other"
+_DEFAULT_FORMAT = "json"
 _DEFAULT_DUMP = True
 _DEFAULT_DUMP_RESULTS = _DEFAULT_DUMP
 _DEFAULT_DUMP_PRMS = _DEFAULT_DUMP
@@ -56,6 +56,7 @@ main = do
   let list = zipWith (\s (t, r) -> (s,t,r)) swapList $ zip tSchedule randoms
   let (optimizedRoute, totalDsts@(totalDst:_)) = sa' route list
   let (optimizedRoute', totalDsts'@(totalDst':_)) = hillclimb optimizedRoute $ take 5000 swapList
+
   if getNeedDumpP args
   then do
     putStrLn $ "args: " ++ show args
@@ -67,12 +68,13 @@ main = do
     putStrLn $ "rate: " ++ show rate
     putStrLn $ "iterations: " ++ show iterations
   else return ()
+
   if getNeedDumpR args
   then do
     print $ reverse $ totalDsts' ++ totalDsts
-    print totalDst
     print totalDst'
     print gen1
+
   else return ()
 
   if True
