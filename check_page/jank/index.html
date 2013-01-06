@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <title>TSP</title>
+  <link href="bootstrap.min.css" rel="stylesheet" media="screen">
+  <style type="text/css">
+    svg {
+      font-size: 9px;
+    }
+
+    .axis path,
+    .axis line {
+      fill: none;
+      stroke: #000;
+      shape-rendering: crispEdges;
+    }
+
+    .x.axis path {
+      display: none;
+    }
+
+    .line {
+      fill: none;
+      stroke: steelblue;
+      stroke-width: 1.5px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="content" id="hillclimb">
+    <h1>山登り法</h1>
+    <p class="total-distance">-</p>
+    <div class="distances-graph">
+      <svg width="200" height="200"></svg>
+    </div>
+    <div class="route-graph">
+      <canvas width="200" height="200"></canvas>
+    </div>
+    <div class="controller">
+      <button class="execute">実行</button>
+      <button class="clear">消去</button>
+      <label for="hillclimb-step">プロット点の間隔</label>
+      <input type="number" class="step" id="hillclimb-step" value="1000">
+      <br>
+      <label for="hillclimb-iterations">繰り返し回数</label>
+      <input type="number" class="iterations" id="hillclimb-iterations" value="10000">
+      <br>
+      <label for="hillclimb-initial-route">初期経路</label><br>
+      <textarea class="initial-route" id="hillclimb-initial-route" cols="80" rows="5">[[37,52],[49,49],[52,64],[20,26],[40,30],[21,47],[17,63],[31,62],[52,33],[51,21],[42,41],[31,32],[5,25],[12,42],[36,16],[52,41],[27,23],[17,33],[13,13],[57,58],[62,42],[42,57],[16,57],[8,52],[7,38],[27,68],[30,48],[43,67],[58,48],[58,27],[37,69],[38,46],[46,10],[61,33],[62,63],[63,69],[32,22],[45,35],[59,15],[5,6],[10,17],[21,10],[5,64],[30,15],[39,10],[32,39],[25,32],[25,55],[48,28],[56,37],[30,40]]</textarea>
+    </div>
+    <hr>
+    <div class="results">
+      <h4>結果</h4>
+      <h6>総距離</h6>
+      <p class="total-distance">-</p>
+      <h6>最終経路</h6>
+      <p class="final-route">-</p>
+    </div>
+  </div>
+
+
+  <div class="content" id="simulated-annealing">
+    <h1>焼きなまし法</h1>
+    <p class="total-distance">-</p>
+    <div class="distances-graph">
+      <svg width="200" height="200"></svg>
+    </div>
+    <div class="route-graph">
+      <canvas width="200" height="200"></canvas>
+    </div>
+    <div class="controller">
+      <button class="execute">実行</button>
+      <button class="clear">消去</button>
+      <label for="simulated-annealing-step">プロット点の間隔</label>
+      <input type="number" class="step" id="hillclimb-step" value="1000">
+      <br>
+      <label for="simulated-annealing-initial-t">初期温度</label>
+      <input type="number" class="initial-t" id="simulated-annealing-initial-t" value="100">
+      <br>
+      <label for="simulated-annealing-final-t">最終温度</label>
+      <input type="number" class="final-t" id="simulated-annealing-final-t" value="0.8">
+      <br>
+      <label for="simulated-annealing-freq">アニーリング回数</label>
+      <input type="number" class="freq" id="simulated-annealing-freq" value="2000">
+      <br>
+      <label for="simulated-annealing-cooling-rate">冷却率</label>
+      <input type="number" class="cooling-rate" id="simulated-annealing-cooling-rate" value="0.9" step="0.01">
+      <br>
+      <label for="simulated-annealing-initial-route">初期経路</label><br>
+      <textarea class="initial-route" id="simulated-annealing-initial-route" cols="80" rows="5">[[37,52],[49,49],[52,64],[20,26],[40,30],[21,47],[17,63],[31,62],[52,33],[51,21],[42,41],[31,32],[5,25],[12,42],[36,16],[52,41],[27,23],[17,33],[13,13],[57,58],[62,42],[42,57],[16,57],[8,52],[7,38],[27,68],[30,48],[43,67],[58,48],[58,27],[37,69],[38,46],[46,10],[61,33],[62,63],[63,69],[32,22],[45,35],[59,15],[5,6],[10,17],[21,10],[5,64],[30,15],[39,10],[32,39],[25,32],[25,55],[48,28],[56,37],[30,40]]</textarea>
+    </div>
+    <hr>
+    <div class="results">
+      <h4>結果</h4>
+      <h6>総距離</h6>
+      <p class="total-distance">-</p>
+      <h6>最終経路</h6>
+      <p class="final-route">-</p>
+    </div>
+  </div>
+
+  <script src="http://code.jquery.com/jquery-1.8.3.min.js"></script>
+  <script src="http://d3js.org/d3.v3.js"></script>
+  <script src="js/lib/underscore.js"></script>
+  <script src="js/lib/backbone.js"></script>
+  <script src="js/tsp.js"></script>
+  <script src="js/route-drawer.js"></script>
+  <script>
+    jQuery(function($) {
+      new app.HillclimbView({tsp: tsp});
+      new app.SimulatedAnnealingView({tsp: tsp});
+    });
+  </script>
+</body>
+</html>
